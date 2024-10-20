@@ -1,0 +1,5 @@
+[Unit]
+Description=Clickhouse-server Service                                                                                                                                                                            [Service]
+ExecStart=sudo -u clickhouse clickhouse-server --config /etc/clickhouse-server/config.xml
+Restart=on-failure                                                                                                                                                                                               [Install]
+WantedBy=multi-user.target

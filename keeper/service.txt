@@ -1,0 +1,9 @@
+[Unit]
+Description=Clickhouse-keeper Service
+
+[Service]
+ExecStart=clickhouse-keeper --config /etc/clickhouse-keeper/keeper_config.xml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,54 @@
+create table default.test_table_replicated_and_sharded_local (
+  id Int32,
+  name String,
+  part_mnth Date
+) engine = ReplicatedMergeTree(
+  '/clickhouse/replicated_and_sharded/tables/0/test_table_replicated_and_sharded_local',
+  '0'
+)
+partition by toYYYYMM(part_mnth)
+order by id;
+
+create table default.test_table_replicated_and_sharded
+as default.test_table_replicated_and_sharded_local
+engine = Distributed('replicated_and_sharded', default, test_table_replicated_and_sharded_local, rand());
+
+------------------------------------------------------------------
+
+create table default.test_table_replicated_and_sharded_local (
+  id Int32,
+  name String,
+  part_mnth Date
+) engine = ReplicatedMergeTree(
+  '/clickhouse/replicated_and_sharded/tables/0/test_table_replicated_and_sharded_local',
+  '1'
+)
+partition by toYYYYMM(part_mnth)
+order by id;
+
+create table default.test_table_replicated_and_sharded
+as default.test_table_replicated_and_sharded_local
+engine = Distributed('replicated_and_sharded', default, test_table_replicated_and_sharded_local, rand());
+
+------------------------------------------------------------------
+
+create table default.test_table_replicated_and_sharded_local (
+  id Int32,
+  name String,
+  part_mnth Date
+) engine = ReplicatedMergeTree(
+  '/clickhouse/replicated_and_sharded/tables/1/test_table_replicated_and_sharded_local',
+  '0'
+)
+partition by toYYYYMM(part_mnth)
+order by id;
+
+create table default.test_table_replicated_and_sharded
+as default.test_table_replicated_and_sharded_local
+engine = Distributed('replicated_and_sharded', default, test_table_replicated_and_sharded_local, rand());
+
+------------------------------------------------------------------
+
+insert into default.test_table_replicated_and_sharded values (1, 'Vasya', '2023-01-01')
+
+select * from default.test_table_replicated_and_sharded
